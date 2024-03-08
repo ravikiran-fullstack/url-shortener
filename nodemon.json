@@ -1,0 +1,6 @@
+{
+  "watch": ["node-backend/src", "node-backend/tsconfig.json", "node-backend/jest.config.js", "node-backend/tslint.json", "node-backend/package.json", "node-backend/package-lock"],
+  "ext": "ts,json",
+  "ignore": ["node-backend/dist", "node-backend/node_modules"],
+  "exec": "nx serve node-backend"
+}

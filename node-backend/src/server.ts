@@ -12,6 +12,8 @@ import { Url } from './models/urlModel';
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 4500;
 
+console.log('host', host);
+
 const app = express();
 app.use(cors()); // Enable All CORS Requests
 app.use(express.json()); // Parse JSON bodies

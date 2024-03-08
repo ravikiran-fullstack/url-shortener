@@ -22,7 +22,9 @@ export function App() {
       console.log(response.data);
     } catch(error){console.log('Error',error)}
   };
-  return <div></div>;
+  return <div>
+    FE
+  </div>;
 }
 
 export default App;

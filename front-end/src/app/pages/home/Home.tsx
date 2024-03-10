@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { PostData, ResponseData } from '../../../types/data';
 
 import './home.module.css';
-import { set } from 'mongoose';
 import Loading from '../../components/Loading';
 
 const StyledHome = styled.div`
@@ -71,11 +70,30 @@ const StyledButton = styled.button`
   }
 `;
 
+const StyledQrCodeBlock = styled.div`
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const StyledShortedUrl = styled.div`
+  margin-top: 10px;
+  font-size: 1.5rem;
+  & a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    &:hover {
+      color: #698ebd;
+    }
+  }
+`;
+
 const Home = () => {
   const [url, setUrl] = useState('');
   const [shortedUrl, setShortedUrl] = useState('');
   const [showShortUrl, setShowShortUrl] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [qrCode, setQrCode] = useState('' as string | ArrayBuffer | null);
   const serverUrl = 'http://localhost:4500';
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,6 +111,7 @@ const Home = () => {
       setLoading(false);
       setShowShortUrl(true);
       setShortedUrl(response.data.short);
+      setQrCode(response.data.qrText);
     } catch (error) {
       setShowShortUrl(false);
       setLoading(false);
@@ -119,10 +138,23 @@ const Home = () => {
       {loading && <Loading />}
       {showShortUrl && (
         <div>
-          Shortened URL:{' '}
-          <StyledLink href={`${serverUrl}/${shortedUrl}`}>
-            {serverUrl}/{shortedUrl}
-          </StyledLink>
+          <StyledShortedUrl>
+            Shortened URL:{' '}
+            <StyledLink href={`${serverUrl}/${shortedUrl}`}>
+              {serverUrl}/{shortedUrl}
+            </StyledLink>
+          </StyledShortedUrl>
+          <div>
+            <StyledLink href={`${serverUrl}/${shortedUrl}`}></StyledLink>
+            <StyledQrCodeBlock>
+              <img
+                src={qrCode as string}
+                alt="QR Code"
+                width="100"
+                height="100"
+              />
+            </StyledQrCodeBlock>
+          </div>
         </div>
       )}
     </StyledHome>

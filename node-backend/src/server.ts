@@ -1,6 +1,7 @@
 import express from 'express';
 import  validUrl from 'valid-url';
 import cors from 'cors';
+import qrcode from 'qrcode';
 
 import { config } from 'dotenv';
 
@@ -11,7 +12,7 @@ import { Url } from './models/urlModel';
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 4500;
 
-console.log('host', host);
+console.log('host ', host);
 
 const app = express();
 app.use(cors()); // Enable All CORS Requests
@@ -32,7 +33,10 @@ app.post('/shorten', async (req, res) => {
     return res.status(401).send({ message: 'Invalid URL' });
   }
 
-  const url = new Url({full: fullUrl});
+  const qrText = `http://${host}:${port}/${fullUrl}`;
+  const qrImageUrl = await qrcode.toDataURL(qrText);
+
+  const url = new Url({ full: fullUrl, qrText: qrImageUrl });
   await url.save();
   res.send(url);
 });

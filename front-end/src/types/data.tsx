@@ -7,5 +7,6 @@ export interface ResponseData {
   full: string;
   clicks: number;
   short: string;
+  qrText: string;
   __v: number;
 }

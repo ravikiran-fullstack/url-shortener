@@ -6,6 +6,7 @@ import { PostData, ResponseData } from '../../../types/data';
 
 import './home.module.css';
 import { set } from 'mongoose';
+import Loading from '../../components/Loading';
 
 const StyledHome = styled.div`
   display: flex;
@@ -20,34 +21,26 @@ const StyledHome = styled.div`
 const StyledForm = styled.form`
   display: grid;
   grid-gap: 10px;
-  grid-template-columns:  3fr 1fr;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto;
+  align-items: center;
   margin-top: 20px;
   width: 50vw;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 15px 11px 15px;
+  background-color: #6d6d6d;
 `;
 
 const StyledInput = styled.input`
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  width:87%;
+  border: none;
+  width: 87%;
   transition: border 0.3s ease;
   &:focus {
-    border: 2px solid #333;
-  }
-`;
-
-const StyledButton = styled.button`
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #c4c486;
-    color: #333;
+    border: none;
   }
 `;
 
@@ -62,7 +55,21 @@ const StyledLink = styled.a`
   }
 `;
 
-
+const StyledButton = styled.button`
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    opacity: ${(props) => (props.disabled ? '0.5' : '0.8')};
+    background-color: ${(props) => (props.disabled ? '#333' : '#e1f8a3')};
+    color: #333;
+  }
+`;
 
 const Home = () => {
   const [url, setUrl] = useState('');
@@ -92,26 +99,24 @@ const Home = () => {
       console.log('Error', error);
     }
   };
+
   return (
     <StyledHome>
       <h1>URL Shortener</h1>
       <StyledForm onSubmit={handleSubmit}>
-        <label>
-          URL:
-          <StyledInput
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            autoComplete="on"
-          />
-        </label>
-        <StyledButton type="submit">
-          Shorten
+        <StyledInput
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          autoComplete="on"
+          placeholder="Enter the Link here..."
+        />
+
+        <StyledButton type="submit" disabled={loading}>
+          Shorten URL
         </StyledButton>
       </StyledForm>
-      {
-        loading && <div>Loading...</div>
-      }
+      {loading && <Loading />}
       {showShortUrl && (
         <div>
           Shortened URL:{' '}

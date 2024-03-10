@@ -2,11 +2,15 @@ export interface PostData {
   fullUrl: string;
 }
 
-export interface ResponseData {
+interface Url {
   _id: string;
   full: string;
   clicks: number;
   short: string;
-  qrImageUrl: string;
   __v: number;
+}
+
+export interface ResponseData {
+  url: Url;
+  qrImageUrl: string;
 }

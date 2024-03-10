@@ -110,7 +110,7 @@ const Home = () => {
       console.log(response.data);
       setLoading(false);
       setShowShortUrl(true);
-      setShortedUrl(response.data.short);
+      setShortedUrl(response.data.url.short);
       setQrCode(response.data.qrImageUrl);
     } catch (error) {
       setShowShortUrl(false);
@@ -140,7 +140,7 @@ const Home = () => {
         <div>
           <StyledShortedUrl>
             Shortened URL:{' '}
-            <StyledLink href={`${serverUrl}/${shortedUrl}`}>
+            <StyledLink href={`${serverUrl}/url/${shortedUrl}`}>
               {serverUrl}/{shortedUrl}
             </StyledLink>
           </StyledShortedUrl>

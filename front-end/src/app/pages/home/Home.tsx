@@ -111,7 +111,7 @@ const Home = () => {
       setLoading(false);
       setShowShortUrl(true);
       setShortedUrl(response.data.short);
-      setQrCode(response.data.qrText);
+      setQrCode(response.data.qrImageUrl);
     } catch (error) {
       setShowShortUrl(false);
       setLoading(false);

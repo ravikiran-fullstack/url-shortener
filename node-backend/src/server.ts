@@ -35,9 +35,9 @@ app.post('/shorten', async (req, res) => {
   const qrText = `http://${host}:${port}/${fullUrl}`;
   const qrImageUrl = await qrcode.toDataURL(qrText);
 
-  const url = new Url({ full: fullUrl, qrText: qrImageUrl });
+  const url = new Url({ full: fullUrl});
   await url.save();
-  res.send(url);
+  res.send({ url , qrImageUrl});
 });
 
 app.get('/url/:shortUrl', async (req, res) => {

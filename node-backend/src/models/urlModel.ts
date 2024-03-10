@@ -11,10 +11,6 @@ export const Url = mongoose.model('Url', new mongoose.Schema({
         required: true,
         default: shortid.generate
     },
-    qrText: {
-        type: String,
-        required: true
-    },
     clicks: {
         type: Number,
         required: true,

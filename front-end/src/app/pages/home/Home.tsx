@@ -6,6 +6,7 @@ import { PostData, ResponseData } from '../../../types/data';
 
 import './home.module.css';
 import Loading from '../../components/Loading';
+import { set } from 'mongoose';
 
 const StyledHome = styled.div`
   display: flex;
@@ -88,12 +89,19 @@ const StyledShortedUrl = styled.div`
   }
 `;
 
+const StyledErrorDiv = styled.div`
+  margin-top: 10px;
+  color: red;
+  font-size: 1.5rem;
+`;
+
 const Home = () => {
   const [url, setUrl] = useState('');
   const [shortedUrl, setShortedUrl] = useState('');
   const [showShortUrl, setShowShortUrl] = useState(false);
   const [loading, setLoading] = useState(false);
   const [qrCode, setQrCode] = useState('' as string | ArrayBuffer | null);
+  const [error, setError] = useState(false);
   const serverUrl = 'http://localhost:4500';
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,9 +120,11 @@ const Home = () => {
       setShowShortUrl(true);
       setShortedUrl(response.data.url.short);
       setQrCode(response.data.qrImageUrl);
+      setError(false);
     } catch (error) {
       setShowShortUrl(false);
-      setLoading(false);
+      setLoading(false);  
+      setError(true);
       console.log('Error', error);
     }
   };
@@ -136,7 +146,7 @@ const Home = () => {
         </StyledButton>
       </StyledForm>
       {loading && <Loading />}
-      {showShortUrl && (
+      {!error && showShortUrl && (
         <div>
           <StyledShortedUrl>
             Shortened URL:{' '}
@@ -157,6 +167,7 @@ const Home = () => {
           </div>
         </div>
       )}
+      {error && <StyledErrorDiv>There was an error, please try again</StyledErrorDiv>}
     </StyledHome>
   );
 };

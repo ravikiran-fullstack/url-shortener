@@ -17,6 +17,7 @@ const StyledLoading = styled.div`
         );
         border-radius: 50%;
         position: relative;
+        margin: 2rem auto;
     
 
     &:before {

@@ -2,11 +2,14 @@ import express from 'express';
 import validUrl from 'valid-url';
 import cors from 'cors';
 import qrcode from 'qrcode';
-
+ 
 import { config } from 'dotenv';
 
 import { connectDB } from './config/db';
 import { Url } from './models/urlModel';
+
+import registerRouter from './routes/register';
+import loginRouter from './routes/login';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 4500;
@@ -19,6 +22,10 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 config();
 connectDB();
+
+app.use('/register', registerRouter);
+
+app.use('/login', loginRouter);
 
 app.get('/', (req, res) => {
   res.send({ message: 'Hello API' });
@@ -35,9 +42,9 @@ app.post('/shorten', async (req, res) => {
   const qrText = `http://${host}:${port}/${fullUrl}`;
   const qrImageUrl = await qrcode.toDataURL(qrText);
 
-  const url = new Url({ full: fullUrl});
+  const url = new Url({ full: fullUrl });
   await url.save();
-  res.send({ url , qrImageUrl});
+  res.send({ url, qrImageUrl });
 });
 
 app.get('/url/:shortUrl', async (req, res) => {
@@ -59,7 +66,6 @@ app.get('/all', async (req, res) => {
   const urls = await Url.find({});
   res.send(urls);
 });
-
 
 //Never call this endpoint in production
 app.get('/deleteall', async (req, res) => {

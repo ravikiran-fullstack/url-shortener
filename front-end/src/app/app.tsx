@@ -8,7 +8,8 @@ import About from "./pages/about/About";
 import DesignDocument from "./pages/design-document/DesignDocument";
 import Profile from "./pages/profile/Profile";
 
-import bgHome from "../assets/bg-home.png";
+import bgHome from "./pages/bg-home.png";
+import Features from "./pages/features/Features";
 
 const StyledMainContainer = styled.div`
   background: url(${bgHome}) no-repeat center center fixed;
@@ -26,6 +27,7 @@ export function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="design-document" element={<DesignDocument />} />
+          <Route path="features" element={<Features />} />
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>

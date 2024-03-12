@@ -8,11 +8,10 @@ import './home.module.css';
 import Loading from '../../components/Loading';
 
 const StyledHome = styled.div`
-  height: 100vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
 
   h1 {
     font-family: 'Madimi One', sans-serif;

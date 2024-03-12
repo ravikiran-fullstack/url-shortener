@@ -6,14 +6,18 @@ import { PostData, ResponseData } from '../../../types/data';
 
 import './home.module.css';
 import Loading from '../../components/Loading';
-import { set } from 'mongoose';
 
 const StyledHome = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  padding-top: 50px;
+
   h1 {
+    font-family: 'Madimi One', sans-serif;
+    font-weight: 400;
+    font-style: normal;
     margin-bottom: 20px;
   }
 `;
@@ -29,7 +33,7 @@ const StyledForm = styled.form`
   border: none;
   border-radius: 5px;
   padding: 20px 15px 11px 15px;
-  background-color: #6d6d6d;
+  background-color: #c6c7d2;
 `;
 
 const StyledInput = styled.input`
@@ -51,23 +55,27 @@ const StyledLink = styled.a`
   font-size: 1.5rem;
   transition: color 0.3s ease;
   &:hover {
-    color: #c4c486;
+    color: #868cc4;
   }
 `;
 
 const StyledButton = styled.button`
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #333;
-  color: #fff;
+  background-color: #fff;
+  color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
     opacity: ${(props) => (props.disabled ? '0.5' : '0.8')};
-    background-color: ${(props) => (props.disabled ? '#333' : '#e1f8a3')};
-    color: #333;
+    background-color: ${(props) => (props.disabled ? '#333' : '#868cc4')};
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: none;
   }
 `;
 
@@ -93,6 +101,13 @@ const StyledErrorDiv = styled.div`
   margin-top: 10px;
   color: red;
   font-size: 1.5rem;
+`;
+
+const StyledSpan = styled.span`
+  color: #ff3ebf;
+  text-decoration: underline;
+  display: block;
+  text-align: center;
 `;
 
 const Home = () => {
@@ -131,7 +146,7 @@ const Home = () => {
 
   return (
     <StyledHome>
-      <h1>URL Shortener</h1>
+      <h1>A Simple Link, yet a valuable tool for <StyledSpan>Everyone</StyledSpan></h1>
       <StyledForm onSubmit={handleSubmit}>
         <StyledInput
           type="text"

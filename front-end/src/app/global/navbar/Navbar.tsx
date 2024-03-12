@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import './navbar.css';
 
 const StyledNav = styled.nav`
-  background-color: #333;
-  color: #fff;
+  color: #3eadff;
   padding: 10px;
   display: flex;
   height: 40px;
@@ -14,13 +13,17 @@ const StyledNav = styled.nav`
 `;
 
 const StyledLink = styled(Link)`
-  color: #fff;
   text-decoration: none;
   margin: 0 10px;
   font-size: 1.5rem;
   transition: color 0.3s ease;
+
+  font-family: 'Madimi One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
   &:hover {
-    color: #ff0;
+    color: #868cc4;
   }
 `;
 
@@ -37,7 +40,7 @@ const Navbar = () => {
           <StyledLink to="/about">About</StyledLink>
         </li>
         <li>
-          <StyledLink to="/contact">Contact</StyledLink>
+          <StyledLink to="/design-document">Design Document</StyledLink>
         </li>
         <li>
           <StyledLink to="/profile">Profile</StyledLink>

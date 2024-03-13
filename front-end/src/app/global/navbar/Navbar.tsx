@@ -7,9 +7,10 @@ const StyledNav = styled.nav`
   color: #3eadff;
   padding: 10px;
   display: flex;
-  height: 40px;
+  height: 60px;
   justify-content: space-between;
   align-items: center;
+  background: rgba(76, 175, 80, 0.1);
 `;
 
 const StyledLink = styled(Link)`
@@ -38,6 +39,9 @@ const Navbar = () => {
       <ul className="right-StyledLinks">
         <li>
           <StyledLink to="/about">About</StyledLink>
+        </li>
+        <li>
+          <StyledLink to="/features">Features</StyledLink>
         </li>
         <li>
           <StyledLink to="/design-document">Design Document</StyledLink>

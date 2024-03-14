@@ -10,6 +10,8 @@ import Profile from "./pages/profile/Profile";
 
 import bgHome from "./pages/bg-home.png";
 import Features from "./pages/features/Features";
+import LoginPage from "./pages/login/LoginPage";
+import RegistrationPage from "./pages/register/RegistrationPage";
 
 const StyledMainContainer = styled.div`
   background: url(${bgHome}) no-repeat center center fixed;
@@ -29,6 +31,8 @@ export function App() {
           <Route path="design-document" element={<DesignDocument />} />
           <Route path="features" element={<Features />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegistrationPage />} />
         </Route>
       </Routes>
     </StyledMainContainer>

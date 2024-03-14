@@ -1,24 +1,59 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   StyledForm,
   StyledFormGroup,
   StyledLabel,
   StyledInput,
-  StyledButton
+  StyledButton,
+  StyledErrorDiv,
 } from '../../global/CommonStyles';
+import axios from 'axios';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [submitFormToggle, setSubmitFormToggle] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const submitForm = async () => {
+      setLoginError(false);
+      try {
+        const response = await axios.post('http://localhost:4500/login', {
+          username,
+          password,
+        });
+        console.log('response', response);
+        setLoginError(false);
+        setSubmitFormToggle(false);
+        setUsername('');
+        setPassword('');
+        navigate('/');
+      } catch (error) {
+        console.log('Error', error);
+        setLoginError(true);
+        setSubmitFormToggle(false);
+      }
+    };
+
+    if (submitFormToggle) {
+      console.log('submitForm', submitForm);
+      submitForm();
+    }
+  }, [submitFormToggle, username, password]);
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailError('');
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordError('');
     setPassword(e.target.value);
   };
 
@@ -27,7 +62,7 @@ const LoginPage = () => {
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(username)) {
       setEmailError('Invalid email format');
       return;
     }
@@ -38,6 +73,7 @@ const LoginPage = () => {
       return;
     }
 
+    setSubmitFormToggle(true);
     // Submit the form
     // TODO: Add your form submission logic here
   };
@@ -50,11 +86,11 @@ const LoginPage = () => {
           <StyledLabel>Email:</StyledLabel>
           <StyledInput
             type="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={username}
+            onChange={handleUsernameChange}
           />
-          {emailError && <span>{emailError}</span>}
         </StyledFormGroup>
+        {emailError && <StyledErrorDiv>{emailError}</StyledErrorDiv>}
         <StyledFormGroup>
           <StyledLabel>Password:</StyledLabel>
           <StyledInput
@@ -62,10 +98,11 @@ const LoginPage = () => {
             value={password}
             onChange={handlePasswordChange}
           />
-          {passwordError && <span>{passwordError}</span>}
         </StyledFormGroup>
+        {passwordError && <StyledErrorDiv>{passwordError}</StyledErrorDiv>}
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
+      {loginError && <p>Invalid email or password</p>}
       <div>
         <p>
           Don't have an account? <Link to="/register">Register</Link>

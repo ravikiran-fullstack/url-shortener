@@ -47,3 +47,7 @@ export const StyledButton = styled.button`
     outline: none;
   }
 `;
+
+export const StyledErrorDiv = styled.div`
+    color: red;
+    `;
